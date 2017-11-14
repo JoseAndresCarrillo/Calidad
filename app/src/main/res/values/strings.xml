@@ -1,0 +1,222 @@
+<resources>
+    <string name="app_name">UNMSM Móvil</string>
+    <string name="BASE_URL">https://rocky-shelf-33795.herokuapp.com/student/</string>
+    <string name="montserrat_regular">fonts/Montserrat-Regular.ttf</string>
+
+    <!--Open and close navigation drawer references-->
+    <string name="drawer_open">Abrir barra de navegación</string>
+    <string name="drawer_close">Cerrar barra de navegación</string>
+
+    <!--dialog strings-->
+    <string name="dialog_logout_text">¿Está seguro que desea salir?</string>
+    <string name="dialog_delete_text">¿Está seguro que desea eliminar?</string>
+
+    <!--default strings-->
+    <string name="default_help">Ayuda</string>
+    <string name="default_profile_name">Perfil</string>
+    <string name="default_contact_text">Contacto</string>
+    <string name="default_help_me_email">develop@prodequa.com</string>
+    <string name="default_terms_conditions_name">Términos y condiciones</string>
+    <string name="default_success">¡Éxito!</string>
+    <string name="default_back_text">Atrás</string>
+    <string name="default_loading_text">Cargando&#8230;</string>
+    <string name="default_ok_text">Aceptar</string>
+    <string name="default_cancel_text">Cancelar</string>
+    <string name="default_error_text">Error</string>
+    <string name="default_phone_text">Teléfono</string>
+    <string name="default_name_text">Nombre</string>
+    <string name="default_last_name_text">Apellido</string>
+    <string name="default_history_text">Historial</string>
+
+    <!--string related to login/logout/register-->
+    <string name="login_change_password">Cambiar contraseña</string>
+    <string name="login_fb_canceled_text">Login por Facebook cancelado</string>
+    <string name="login_recover_password">Recuperar Contraseña</string>
+    <string name="login_fb_error_text">Error de Facebook. Por favor, inténtelo de nuevo más tarde</string>
+    <string name="login_register_dni_error">El DNI debe tener 8 caracteres.</string>
+    <string name="login_register_code_error">El código debe tener 8 caracteres.</string>
+    <string name="login_email_error">Ingrese un e-mail válido.</string>
+    <string name="login_birth_date_error">Ingrese una fecha válida.</string>
+    <string name="login_name_error">El nombre es requerido.</string>
+    <string name="login_last_name_error">El apellido es requerido.</string>
+    <string name="login_email_hint">Correo electrónico</string>
+    <string name="login_logout_text">Cerrar sesión</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_button_login_text">Iniciar Sesión</string>
+    <string name="login_email_required">Correo electrónico es requerido.</string>
+    <string name="login_error_email">Correo electrónico no es correcto.</string>
+    <string name="login_error_password_length_hint">La contraseña debe tener más de 6 caracteres.</string>
+    <string name="login_password_required">Se requiere contraseña</string>
+    <string name="login_new_password_required">Se requiere nueva contraseña</string>
+    <string name="login_password_must_coincide_error">La contraseñas deben coincidir</string>
+    <string name="login_error_404">Correo electrónico o la contraseña son incorrectos</string>
+    <string name="login_error_auth">La información ingresada es incorrecta. Por favor, inténtelo de nuevo</string>
+    <string name="login_change_password_success">Contraseña cambiada!!</string>
+    <string name="login_dialog_logout_text">¿Está seguro que desea salir?</string>
+    <string name="login_change_password_actual_password">Contraseña Actual</string>
+    <string name="login_change_password_new_password">Nueva contraseña</string>
+    <string name="login_change_password_confirm_password">Confirme nueva contraseña</string>
+    <string name="login_forgot_password"><u>Olvidé mi Contraseña</u></string>
+    <string name="login_register_text">Registrarse</string>
+
+    <!--strings related to home-->
+    <string name="home_welcome">¡Bienvenido</string>
+    <string name="home_name">Nombres</string>
+    <string name="home_lastname">Apellidos</string>
+    <string name="home_code">Código</string>
+    <string name="home_dni">DNI</string>
+    <string name="home_faculty">Facultad</string>
+    <string name="home_major">Carrera</string>
+
+    <!--strings related to generic errors-->
+    <string name="error_server_text">Por favor, inténtelo de nuevo más tarde</string>
+    <string name="error_network_text">Compruebe su red y vuelva a intentarlo</string>
+    <string name="error_500_text">Error de servidor interno. Por favor, inténtelo de nuevo más tarde.</string>
+    <string name="error_401_error">Tienes que estar logeado para hacer esto</string>
+    <string name="error_403_error">No puedes hacer eso</string>
+    <string name="error_location_disabled">Necesita habilitar los permisos de su ubicación</string>
+    <string name="error_dialog_error_text">Ha ocurrido un error!</string>
+    <string name="error_timeout_error_text">Error de conexión con el servidor</string>
+    <string name="error_auth_error_text">Error de autenticación</string>
+
+    <!--string related to navigation drawer-->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_events">Eventos</string>
+    <string name="nav_maps">Mapa de la UNMSM</string>
+    <string name="nav_reminders">Recordatorios</string>
+    <string name="nav_schedule">Mi Horario</string>
+    <string name="nav_notes">Mis Notas</string>
+    <string name="nav_about">Acerca de UNMSM Móvil</string>
+    <string name="nav_logout">Cerrar Sesión</string>
+
+    <!--false data for home activty-->
+    <string name="std_name">JUAN GABRIEL</string>
+    <string name="std_lastname">RAMIREZ ESPINOZA</string>
+    <string name="std_code">14200182</string>
+    <string name="std_dni">71490287</string>
+    <string name="std_faculty">INGENIERIA DE SISTEMAS E INFORMATICA</string>
+    <string name="std_major">INGENIERIA DE SOFTWARE</string>
+
+    <!--false data for events activity-->
+    <string name="e_name">ENEISOFT 2018</string>
+    <string name="e_place">Auditorio de la FISI</string>
+    <string name="e_date">14/07/2018</string>
+    <string name="e_time">16:00-22:00</string>
+
+    <string name="e_name1">VI Festival de  Música Folclórica</string>
+    <string name="e_place1">Auditorio Ella Dumbar</string>
+    <string name="e_date1">13/07/2018</string>
+    <string name="e_time1">16:00-22:00</string>
+
+    <string name="e_name2">Verbena de Odontología</string>
+    <string name="e_place2">Estacionamiento de Odontología</string>
+    <string name="e_date2">14/07/2018</string>
+    <string name="e_time2">16:00-22:00</string>
+
+    <string name="e_name3">Geeky Girls</string>
+    <string name="e_place3">Auditorio de la FISI</string>
+    <string name="e_date3">20/08/2018</string>
+    <string name="e_time3">13:00-18:00</string>
+
+    <!--event categories-->
+    <string name="cat1">Arte</string>
+    <string name="cat2">Ciencia</string>
+    <string name="cat3">Convenios</string>
+    <string name="cat4">Certificaciones</string>
+    <string name="cat5">Debates</string>
+    <string name="cat6">Economía</string>
+    <string name="cat7">Historia</string>
+    <string name="cat8">Internacional</string>
+    <string name="cat9">Tecnología</string>
+
+    <!--some data for grades activity-->
+    <string name="course1">Programación I</string>
+    <string name="course2">Cálculo II</string>
+    <string name="course3">Idioma Extranjero II</string>
+    <string name="course4">Física I</string>
+    <string name="course5">Teoría General de Sistemas</string>
+    <string name="calc">Calcular</string>
+
+    <string name="item">Ítem</string>
+    <string name="weight">Peso</string>
+    <string name="grade">Nota</string>
+
+    <string name="grade1">15.15</string>
+    <string name="grade2">09.00</string>
+    <string name="grade3">19.00</string>
+    <string name="grade4">13.05</string>
+    <string name="grade5">10.49</string>
+
+    <string name="prom_lab">Promedio de laboratorio</string>
+    <string name="prom_prac">Promedio de prácticas</string>
+    <string name="ep">Examen Parcial</string>
+    <string name="ef">Examen Final</string>
+    <string name="prom">Promedio Final</string>
+
+    <string name="w1">30</string>
+    <string name="w2">20</string>
+    <string name="perc">%</string>
+
+    <!--strings related to maps-->
+    <string name="map_permission">Permiso de Ubicación</string>
+    <string name="map_permission_message">UNMSM Móvil necesita permiso de ubicación</string>
+    <string name="map_cancel_permission">No se dio el permiso de ubicación</string>
+    <string name="map_error_permission">Error de permiso</string>
+    <string name="map_location_enabled">La ubicación esta activada.</string>
+    <string name="map_location_disabled">La ubicación esta desactivada.</string>
+    <string name="map_location_disabled_message">¿Desearía activar la ubicación?</string>
+    <string name="map_positive_button">Ir a ajustes </string>
+
+    <!--false data for maps-->
+    <string name="stadiumTitle">Estadio de la UNMSM</string>
+    <string name="stadiumDescription">El estadio de San Marcos tiene un campo principal de fútbol y
+        graderías para 70.000 espectadores, existiendo un proyecto que precisa que pueden ampliarse
+        hasta una capacidad que permita 104.000 espectadores. Actualmente, el asunto de la seguridad
+        , en cuanto a salidas y vías de acceso, únicamente le permite operar con un máximo de 45.000
+        espectadores en las tribunas.</string>
+    <string name="stadiumLocation">Cercado de Lima 15081</string>
+    <string name="stadiumPhone">(01) 6197000</string>
+    <string name="stadiumServiceDescription">El estadio de San Marcos tiene un campo principal de 
+        fútbol y graderías para 70.000 espectadores, existiendo un proyecto que precisa que pueden 
+        ampliarse hasta una capacidad que permita 104.000 espectadores.</string>
+    <string name="stadiumService1">- Desarrollo de fútbol de Segunda División.</string>
+    <string name="stadiumService2">- Espectáculos artísticos.</string>
+    <string name="stadiumService3">- Actividades escolares.</string>
+    <string name="stadiumService4">- Actividades culturales.</string>
+
+    <!--Tabs for DetailsMarkerActivity-->
+    <string name="markerDescription">DESCRIPCIÓN</string>
+    <string name="markerService">SERVICIOS</string>
+    <string name="markerPhotos">FOTOS</string>
+    <string name="default_marker_details_title">Detalle del Lugar</string>
+
+    <!--extra-->
+    <string name="see_more">Ver más</string>
+    <string name="preferences">Preferencias de eventos</string>
+    <string name="check_interested">Me interesa</string>
+    <string name="e_description">Celebración en homenaje al vigésimo aniversario de la Facultad de Odontología.</string>
+    <string name="e_organized">Facultad de Odontología</string>
+    <string name="place">Lugar</string>
+    <string name="organized">Organiza</string>
+    <string name="date">Fecha</string>
+    <string name="time">Horario</string>
+
+    <!--Message for Register-->
+    <string name="message_scan">Escanee el código QR ubicado en el reverso de su carnet para poder iniciar con su registro</string>
+
+    <!--- About info -->
+    <string name="app_ver">Versión 1.0</string>
+    <string name="app_desc">Aplicación móvil para la comunidad estudiantil de la Universidad Nacional Mayor de San Marcos</string>
+    <string name="app_copy">© 2017 Banzai Software. All rights reserved</string>
+
+    <!-- Extra -->
+    <string name="day1">Lunes</string>
+    <string name="day2">Martes</string>
+    <string name="day3">Miércoles</string>
+    <string name="day4">Jueves</string>
+    <string name="day5">Viernes</string>
+    <string name="day6">Sábado</string>
+    <string name="time_start">18:00</string>
+    <string name="time_end">22:00</string>
+
+</resources>

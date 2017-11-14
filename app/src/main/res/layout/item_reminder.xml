@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/reminderCard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    android:layout_marginBottom="6dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@+id/reminder_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <TextView
+            android:id="@+id/reminder_text"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="4"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tool:text="@string/app_name" />
+
+        <ImageView
+            android:id="@+id/reminder_edit"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_create_grey_24dp" />
+        <ImageView
+            android:id="@+id/reminder_delete"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_delete_grey_24dp" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
