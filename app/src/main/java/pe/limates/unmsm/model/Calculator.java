@@ -2,21 +2,28 @@ package pe.limates.unmsm.model;
 
 public class Calculator {
 
-    private int mItemDescId;
-    private int mItemWeightId;
+    private String mItemDesc;
+    private Double mItemWeight;
     private Double mItemGrade;
 
-    public Calculator(int itemDescId, int itemWeightId) {
-        mItemDescId = itemDescId;
-        mItemWeightId = itemWeightId;
+    public Calculator() {
+
     }
 
-    public int getItemDescId() {
-        return mItemDescId;
+    public String getItemDesc() {
+        return mItemDesc;
     }
 
-    public int getItemWeightId() {
-        return mItemWeightId;
+    public void setItemDesc(String itemDesc) {
+        this.mItemDesc = itemDesc;
+    }
+
+    public Double getItemWeight() {
+        return mItemWeight;
+    }
+
+    public void setItemWeight(Double itemWeight) {
+        this.mItemWeight = itemWeight;
     }
 
     public Double getItemGrade() {

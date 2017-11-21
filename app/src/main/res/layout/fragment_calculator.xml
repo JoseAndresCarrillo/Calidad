@@ -40,9 +40,16 @@
             android:paddingStart="4dp"
             android:text="@string/grade" />
 
+        <Button
+            android:id="@+id/add_item"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="+"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list_weight_grades"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

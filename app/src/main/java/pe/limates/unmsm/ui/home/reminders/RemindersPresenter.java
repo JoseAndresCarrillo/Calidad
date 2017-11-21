@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Reminder;
-import pe.limates.unmsm.ui.home.reminders.RemindersContractor.Presenter;
 import pe.limates.unmsm.util.app.App;
 import pe.limates.unmsm.util.retrofit.RetrofitBuilder;
 import pe.limates.unmsm.util.retrofit.UnmsmAPI;
@@ -52,30 +51,33 @@ public class RemindersPresenter implements RemindersContractor.Presenter {
     @Override
     public ArrayList<Reminder> getReminders() {
         reminders.clear();
-        if(connection.getRetrofit() != null){
+        if (connection.getRetrofit() != null) {
             UnmsmAPI service = connection.getRetrofit().create(UnmsmAPI.class);
 //            Log.d(TAG, App.user_info.getToken());
-            Call<ArrayList<Reminder>> call = service.getReminders("Bearer "+ App.user_info.getToken());
+            Call<ArrayList<Reminder>> call = service.getReminders("Bearer " + App.user_info.getToken());
             call.enqueue(new Callback<ArrayList<Reminder>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Reminder>> call, Response<ArrayList<Reminder>> response) {
-                    switch (response.code()){
-                        case 200: reminders.addAll(response.body());
+                    switch (response.code()) {
+                        case 200:
+                            reminders.addAll(response.body());
                             Log.d(TAG, "Reminders: yey");
-                            Log.d(TAG, "size: "+response.body().size());
-                            if(isAttached()) {
+                            Log.d(TAG, "size: " + response.body().size());
+                            if (isAttached()) {
                                 getView().updateAdapter();
 //                                getView().showRecycler();
 //                                getView().stopRefresh();
                             }
                             break;
-                        default: Log.d(TAG, response.raw().toString()); break;
+                        default:
+                            Log.d(TAG, response.raw().toString());
+                            break;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<Reminder>> call, Throwable t) {
-                    Log.d(TAG, "Reminders on failture");
+                    Log.d(TAG, "Reminders on failure");
                 }
             });
         }

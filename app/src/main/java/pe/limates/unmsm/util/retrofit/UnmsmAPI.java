@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import pe.limates.unmsm.model.Course;
+import pe.limates.unmsm.model.CourseGrade;
+import pe.limates.unmsm.model.CoursePost;
 import pe.limates.unmsm.model.Event;
 import pe.limates.unmsm.model.LoginPost;
 import pe.limates.unmsm.model.LoginResult;
@@ -11,6 +13,9 @@ import pe.limates.unmsm.model.Major;
 import pe.limates.unmsm.model.Place;
 import pe.limates.unmsm.model.RegisterPost;
 import pe.limates.unmsm.model.Reminder;
+import pe.limates.unmsm.model.ReminderPost;
+import pe.limates.unmsm.model.Schedule;
+import pe.limates.unmsm.model.Student;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -61,6 +66,18 @@ public interface UnmsmAPI {
     @Headers({"Content-Type: application/json"})
     @DELETE("deleteReminder/{id}")
     Call<ResponseBody> deleteReminder(@Header("Authorization") String credentials, @Path("id") String id);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("registerCourse")
+    Call<ResponseBody> registerCourse(@Header("Authorization") String credentials, @Body CoursePost course);
+
+    @Headers({"Content-Type: application/json"})
+    @POST("registerReminder")
+    Call<ResponseBody> registerReminder(@Header("Authorization") String credentials, @Body ReminderPost reminderPost);
+
+    @Headers({"Content-Type: application/json"})
+    @GET("coursesGrades")
+    Call<ArrayList<CourseGrade>> getCoursesGrades(@Header("Authorization") String credentials);
 
 //    @POST("orders/{id}/take")
 //    Call<ResponseBody> takeOrder(@Header("Authorization") String credentials, @Path("id") String orderId);

@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by cristinacaballerohervias on 26/09/17.
  */
 
-public class Event implements Serializable{
+public class Event implements Serializable {
     @SerializedName("_id")
     @Expose
     private String id;
@@ -42,13 +42,16 @@ public class Event implements Serializable{
     private Hour endHour;
     @SerializedName("faculty")
     @Expose
-    private Integer faculty;
+    private Faculty faculty;
     @SerializedName("place")
     @Expose
     private String place;
     @SerializedName("typeEvent")
     @Expose
-    private Integer typeEvent;
+    private TypeEvent typeEvent;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
 
     public String getId() {
         return id;
@@ -130,11 +133,11 @@ public class Event implements Serializable{
         this.endHour = endHour;
     }
 
-    public Integer getFaculty() {
+    public Faculty getFaculty() {
         return faculty;
     }
 
-    public void setFaculty(Integer faculty) {
+    public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
     }
 
@@ -146,11 +149,19 @@ public class Event implements Serializable{
         this.place = place;
     }
 
-    public Integer getTypeEvent() {
+    public TypeEvent getTypeEvent() {
         return typeEvent;
     }
 
-    public void setTypeEvent(Integer typeEvent) {
+    public void setTypeEvent(TypeEvent typeEvent) {
         this.typeEvent = typeEvent;
+    }
+
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
     }
 }

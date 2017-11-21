@@ -4,64 +4,67 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import pe.limates.unmsm.R;
-import pe.limates.unmsm.model.Grade;
+import pe.limates.unmsm.model.CourseGrade;
 import pe.limates.unmsm.ui.home.grades.adapters.GradesAdapter;
-import pe.limates.unmsm.ui.home.grades.fragments.calculator.CalculatorFragment;
 
-public class GradesFragment extends Fragment implements GradesContractor.View{
+public class GradesFragment extends Fragment implements GradesContractor.View {
 
     private GradesContractor.Presenter presenter;
     private Context mContext;
     private final String TAG = GradesFragment.class.getSimpleName();
+
+    private ArrayList<CourseGrade> grades;
+    private RecyclerView mRecycler;
+    private GradesAdapter mAdapter;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
+
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_grades);
+
         View rootView = inflater.inflate(R.layout.fragment_grades, container, false);
         mContext = getActivity();
-        //initilize presenter
+        //initialize presenter
         if (presenter == null) {
             presenter = new GradesPresenter(mContext);
         }
-        final ArrayList<Grade> grades = new ArrayList<Grade>();
-        grades.add(new Grade(R.string.course1, R.string.grade1));
-        grades.add(new Grade(R.string.course2, R.string.grade2));
-        grades.add(new Grade(R.string.course3, R.string.grade3));
-        grades.add(new Grade(R.string.course4, R.string.grade4));
-        grades.add(new Grade(R.string.course5, R.string.grade5));
+        initializeViews(rootView);
 
-        // Create the adapter to convert the array to views
-        GradesAdapter adapter = new GradesAdapter(mContext, grades);
-        // Attach the adapter to a ListView
-        ListView cardListView = rootView.findViewById(R.id.list_grades);
+        getPresenter().onViewAttached(GradesFragment.this);
 
-        cardListView.setAdapter(adapter);
+        mAdapter = new GradesAdapter(mContext, grades = getPresenter().getCoursesGrades());
+        mRecycler.setAdapter(mAdapter);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+        ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+        mRecycler.setLayoutManager(mLayoutManager);
+        mAdapter.notifyDataSetChanged();
 
-        cardListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position, long arg3) {
-                CalculatorFragment nextFrag= new CalculatorFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.left_in, 0, R.anim.left_in_back, R.anim.right_out_back);
-                ft.replace(R.id.content_layout, nextFrag, "Calculator").
-                        addToBackStack(null)
-                        .commit();
-            }
-        });
         return rootView;
+    }
+
+    private void initializeViews(View view) {
+        mRecycler = view.findViewById(R.id.list_grades);
+    }
+
+    @Override
+    public void updateAdapter() {
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -77,7 +80,8 @@ public class GradesFragment extends Fragment implements GradesContractor.View{
     }
 
 
-    private GradesContractor.Presenter getPresenter(){
+    private GradesContractor.Presenter getPresenter() {
         return presenter;
     }
+
 }

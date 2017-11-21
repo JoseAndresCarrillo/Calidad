@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Reminder;
 import pe.limates.unmsm.ui.home.reminders.adapters.RemindersAdapter;
+import pe.limates.unmsm.ui.home.reminders.fragments.ReminderNewFragment;
 
 
 public class RemindersFragment extends Fragment implements RemindersContractor.View {
@@ -35,6 +38,10 @@ public class RemindersFragment extends Fragment implements RemindersContractor.V
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
+
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_reminders);
+
         View rootView = inflater.inflate(R.layout.fragment_reminders, container, false);
         mContext = getActivity();
         //initilize presenter
@@ -44,12 +51,6 @@ public class RemindersFragment extends Fragment implements RemindersContractor.V
         initializeViews(rootView);
 
         getPresenter().onViewAttached(RemindersFragment.this);
-//
-//        reminders = new ArrayList<>();
-//        reminders.add(new Reminder(getString(R.string.stadiumDescription), R.color.red_100));
-//        reminders.add(new Reminder(getString(R.string.e_name2), R.color.blue_100));
-//        reminders.add(new Reminder(getString(R.string.e_name3), R.color.yellow_100));
-//        reminders.add(new Reminder(getString(R.string.app_desc), R.color.green_100));
 
         mAdapter = new RemindersAdapter(mContext, reminders = getPresenter().getReminders());
         mRecycler.setAdapter(mAdapter);
@@ -58,17 +59,15 @@ public class RemindersFragment extends Fragment implements RemindersContractor.V
         mRecycler.setLayoutManager(mLayoutManager);
         mAdapter.notifyDataSetChanged();
 
-
         rootView.findViewById(R.id.add_reminder).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Add new reminder", Toast.LENGTH_SHORT).show();
-                /*ReminderNewFragment nextFrag = new ReminderNewFragment();
+                ReminderNewFragment nextFrag = new ReminderNewFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.anim.left_in, 0, R.anim.left_in_back, R.anim.right_out_back);
                 ft.replace(R.id.content_layout, nextFrag, "Add Reminder").
                         addToBackStack(null)
-                        .commit();*/
+                        .commit();
             }
         });
 

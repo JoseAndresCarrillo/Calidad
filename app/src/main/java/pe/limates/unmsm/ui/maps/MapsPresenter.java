@@ -16,7 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MapsPresenter implements MapsContractor.Presenter{
+public class MapsPresenter implements MapsContractor.Presenter {
     private MapsContractor.View view;
     private Context mContext;
     private RetrofitBuilder connection;
@@ -43,27 +43,38 @@ public class MapsPresenter implements MapsContractor.Presenter{
     @Override
     public ArrayList<Place> getPlaces() {
         places.clear();
-        if(connection.getRetrofit() != null){
+        getView().showLoadingDialog();
+        if (connection.getRetrofit() != null) {
             UnmsmAPI service = connection.getRetrofit().create(UnmsmAPI.class);
 //            Log.d(TAG, App.user_info.getToken());
-            Call<ArrayList<Place>> call = service.getPlaces("Bearer "+ App.user_info.getToken());
+            Call<ArrayList<Place>> call = service.getPlaces("Bearer " + App.user_info.getToken());
             call.enqueue(new Callback<ArrayList<Place>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Place>> call, Response<ArrayList<Place>> response) {
-                    switch (response.code()){
-                        case 200: places.addAll(response.body());
+                    switch (response.code()) {
+                        case 200:
+                            places.addAll(response.body());
                             Log.d(TAG, "Places: yey");
-                            if(isAttached()) {
+                            if (isAttached()) {
                                 getView().putMarkers();
+                                getView().hideLoadingdialog();
                             }
                             break;
-                        default: Log.d(TAG, response.raw().toString()); break;
+                        default:
+                            if (isAttached()) {
+                                getView().hideLoadingdialog();
+                            }
+                            Log.d(TAG, response.raw().toString());
+                            break;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<Place>> call, Throwable t) {
                     Log.d(TAG, "Places on failture");
+                    if (isAttached()) {
+                        getView().hideLoadingdialog();
+                    }
                 }
             });
         }
@@ -71,32 +82,39 @@ public class MapsPresenter implements MapsContractor.Presenter{
     }
 
     @Override
-    public Place getPlaceInfo(String id) {
-        if(connection.getRetrofit() != null){
+    public void getPlaceInfo(String id) {
+        getView().showLoadingDialog();
+        if (connection.getRetrofit() != null) {
             UnmsmAPI service = connection.getRetrofit().create(UnmsmAPI.class);
-            Call<Place> call = service.getPlaceInfo("Bearer "+ App.user_info.getToken(), id);
+            Call<Place> call = service.getPlaceInfo("Bearer " + App.user_info.getToken(), id);
             call.enqueue(new Callback<Place>() {
                 @Override
                 public void onResponse(Call<Place> call, Response<Place> response) {
-                    switch (response.code()){
+                    switch (response.code()) {
                         case 200:
                             place = response.body();
                             Log.d(TAG, "Place info: yey");
-                            if(isAttached()) {
-                                getView().goPlaceDetailsActivity();
+                            if (isAttached()) {
+                                getView().hideLoadingdialog();
+                                getView().goPlaceDetailsActivity(place);
                             }
                             break;
-                        default: Log.d(TAG, response.raw().toString()); break;
+                        default:
+                            if (isAttached()) {
+                                getView().hideLoadingdialog();
+                            }
+                            Log.d(TAG, response.raw().toString());
+                            break;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Place> call, Throwable t) {
                     Log.d(TAG, "Places on failture");
+                    getView().hideLoadingdialog();
                 }
             });
         }
-        return place;
     }
 
     @Nullable

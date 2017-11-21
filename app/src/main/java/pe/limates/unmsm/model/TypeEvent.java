@@ -1,19 +1,19 @@
 package pe.limates.unmsm.model;
 
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by josan on 1/10/2017.
- */
-
-public class Faculty {
+public class TypeEvent {
     @SerializedName("_id")
     @Expose
-    private Integer id;
+    private String id;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("__v")
     @Expose
     private Integer v;
@@ -26,11 +26,11 @@ public class Faculty {
         this.name = name;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

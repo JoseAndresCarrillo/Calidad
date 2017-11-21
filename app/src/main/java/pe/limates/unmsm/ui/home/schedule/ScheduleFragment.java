@@ -5,14 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Course;
 import pe.limates.unmsm.ui.home.schedule.adapters.ScheduleAdapter;
+import pe.limates.unmsm.ui.home.schedule.fragments.ScheduleNewFragment;
 
 
 public class ScheduleFragment extends Fragment implements ScheduleContractor.View {
@@ -33,11 +37,16 @@ public class ScheduleFragment extends Fragment implements ScheduleContractor.Vie
     private SwipeRefreshLayout mSwipe;
     private FloatingActionButton mAddButton;
     private ArrayList<Course> mArrayList;
+    private ImageView mImage;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
+
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_schedule);
+
         View rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
         mContext = getActivity();
         //initialize presenter
@@ -57,7 +66,12 @@ public class ScheduleFragment extends Fragment implements ScheduleContractor.Vie
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "Add new course", Toast.LENGTH_SHORT).show();
+                ScheduleNewFragment nextFrag = new ScheduleNewFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.left_in, 0, R.anim.left_in_back, R.anim.right_out_back);
+                ft.replace(R.id.content_layout, nextFrag, "Add new course").
+                        addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -75,6 +89,7 @@ public class ScheduleFragment extends Fragment implements ScheduleContractor.Vie
         mSwipe = view.findViewById(R.id.schedule_swipe);
         mRecycler = view.findViewById(R.id.schedule_recycler);
         mAddButton = view.findViewById(R.id.add_course_schedule);
+        mImage = view.findViewById(R.id.no_schedule);
     }
 
     @Override

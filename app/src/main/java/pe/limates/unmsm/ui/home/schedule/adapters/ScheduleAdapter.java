@@ -1,7 +1,6 @@
 package pe.limates.unmsm.ui.home.schedule.adapters;
 
 import android.content.Context;
-import android.graphics.CornerPathEffect;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -23,16 +20,12 @@ import java.util.ArrayList;
 import okhttp3.ResponseBody;
 import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Course;
-import pe.limates.unmsm.ui.home.schedule.ScheduleContractor;
-import pe.limates.unmsm.ui.home.schedule.ScheduleFragment;
 import pe.limates.unmsm.util.app.App;
 import pe.limates.unmsm.util.retrofit.RetrofitBuilder;
 import pe.limates.unmsm.util.retrofit.UnmsmAPI;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static pe.limates.unmsm.ui.home.schedule.ScheduleFragment.getPresenter;
 
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.CustomViewHolder> {
@@ -59,7 +52,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Custom
     }
 
     @Override
-    public void onBindViewHolder(ScheduleAdapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(ScheduleAdapter.CustomViewHolder holder, final int position) {
         try {
             final Course course = arrayList.get(position);
             ScheduleDetailAdapter adapter = new ScheduleDetailAdapter(mContext, course.getSchedule());
@@ -72,7 +65,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Custom
                             .positiveText("Sí").onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
                                 public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    deleteCourse(course.getId());
+                                    deleteCourse(course.getId(), position);
                                 }
                             })
                             .negativeText("No").onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -125,7 +118,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Custom
         }
     }
 
-    public void deleteCourse(String id) {
+    public void deleteCourse(String id, final int position) {
         if (connection.getRetrofit() != null) {
             UnmsmAPI service = connection.getRetrofit().create(UnmsmAPI.class);
             Call<ResponseBody> call = service.deleteCourse("Bearer " + App.user_info.getToken(), id);
@@ -135,6 +128,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Custom
                     switch (response.code()) {
                         case 200:
                             Log.d(TAG, "Delete success");
+                            arrayList.remove(position);
+                            notifyDataSetChanged();
                             break;
                         default:
                             Log.d(TAG, response.raw().toString());

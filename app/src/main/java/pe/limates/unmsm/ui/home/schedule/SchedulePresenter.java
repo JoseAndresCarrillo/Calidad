@@ -3,6 +3,7 @@ package pe.limates.unmsm.ui.home.schedule;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import okhttp3.ResponseBody;
 import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Course;
+import pe.limates.unmsm.model.Hour;
+import pe.limates.unmsm.model.Schedule;
 import pe.limates.unmsm.util.app.App;
 import pe.limates.unmsm.util.retrofit.RetrofitBuilder;
 import pe.limates.unmsm.util.retrofit.UnmsmAPI;

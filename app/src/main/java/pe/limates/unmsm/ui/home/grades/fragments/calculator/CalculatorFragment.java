@@ -4,13 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,49 +28,69 @@ public class CalculatorFragment extends Fragment implements CalculatorContractor
     private Context mContext;
     private TextView promTextView;
     private final String TAG = CalculatorFragment.class.getSimpleName();
+    private Button addItem, calculateButton;
+
     private ArrayList<Calculator> calculators;
-    private Button calculateButton;
+    private RecyclerView mRecycler;
+    private CalculatorAdapter mAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
+
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_grades);
+
         View rootView = inflater.inflate(R.layout.fragment_calculator, container, false);
         mContext = getActivity();
-        //initilize presenter
         if (presenter == null) {
             presenter = new CalculatorPresenter(mContext);
         }
 
-        promTextView = rootView.findViewById(R.id.final_prom);
-        calculateButton = rootView.findViewById(R.id.button_calculate);
-
+        initializeViews(rootView);
         calculators = new ArrayList<>();
-        calculators.add(new Calculator(R.string.prom_lab, R.string.w2));
-        calculators.add(new Calculator(R.string.prom_prac, R.string.w2));
-        calculators.add(new Calculator(R.string.ep, R.string.w1));
-        calculators.add(new Calculator(R.string.ef, R.string.w1));
 
-        CalculatorAdapter adapter = new CalculatorAdapter(mContext, calculators);
-        ListView listView = rootView.findViewById(R.id.list_weight_grades);
-        listView.setAdapter(adapter);
+        addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calculators.add(new Calculator());
+                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mAdapter = new CalculatorAdapter(mContext, calculators);
+        mRecycler.setAdapter(mAdapter);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(mContext);
+        ((SimpleItemAnimator) mRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
+        mRecycler.setLayoutManager(mLayoutManager);
+        mAdapter.notifyDataSetChanged();
 
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Double finalProm = 0.0;
+                Double weightSum = 0.0;
                 for (int i = 0; i < calculators.size(); i++) {
-                    if (calculators.get(i).getItemGrade() != null) {
-                        finalProm = finalProm + calculators.get(i).getItemGrade()
-                                * Integer.parseInt(getString(calculators.get(i).getItemWeightId())) / 100;
+                    if ((calculators.get(i).getItemGrade() != null) && (calculators.get(i).getItemWeight() != null)) {
+                        finalProm = finalProm + calculators.get(i).getItemGrade() * calculators.get(i).getItemWeight();
+                        weightSum = weightSum + calculators.get(i).getItemWeight();
                     }
                 }
+                finalProm = finalProm / weightSum;
                 promTextView.setText(String.format("%.2f", finalProm));
 
             }
         });
 
         return rootView;
+    }
+
+    private void initializeViews(View view) {
+        promTextView = view.findViewById(R.id.final_prom);
+        calculateButton = view.findViewById(R.id.button_calculate);
+        mRecycler = view.findViewById(R.id.list_weight_grades);
+        addItem = view.findViewById(R.id.add_item);
     }
 
     @Override

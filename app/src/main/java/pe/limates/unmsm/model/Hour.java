@@ -17,6 +17,11 @@ public class Hour implements Serializable {
     @Expose
     private String m;
 
+    public Hour(String h, String m) {
+        this.h = h;
+        this.m = m;
+    }
+
     public String getH() {
         return h;
     }

@@ -54,11 +54,10 @@ public class EventsDetailFragment extends Fragment {
         try {
             mTitle.setText(mEvent.getTitle());
             mDescription.setText(mEvent.getDescription());
-            mOrganizer.setText(mEvent.getFaculty().toString());
+            mOrganizer.setText(mEvent.getFaculty().getName());
             mPlace.setText(mEvent.getPlace());
-            mDate.setText(mEvent.getDay()+"/"+mEvent.getMonth()+"/"+mEvent.getYear());
-            mHour.setText(mEvent.getStartHour().getH()+":"+mEvent.getStartHour().getM()+"-"+mEvent.getEndHour().getH()+":"+mEvent.getEndHour().getM());
-
+            mDate.setText(mEvent.getDay() + "/" + mEvent.getMonth() + "/" + mEvent.getYear());
+            mHour.setText(mEvent.getStartHour().getH() + ":" + mEvent.getStartHour().getM() + "-" + mEvent.getEndHour().getH() + ":" + mEvent.getEndHour().getM());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/product_slider"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="8dp">
 
             <TextView
                 android:id="@+id/details_description_textview"
                 style="@style/DataDetails"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/stadiumDescription"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp"
+                android:text="@string/stadiumDescription" />
 
-            <TextView
-                style="@style/Divider" />
+            <TextView style="@style/Divider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -41,19 +44,18 @@
                     android:id="@+id/details_location_ic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tint="@color/grey_700"
-                    android:src="@drawable/ic_place_black_24dp"/>
+                    android:src="@drawable/ic_place_black_24dp"
+                    android:tint="@color/grey_700" />
 
                 <TextView
                     android:id="@+id/details_location_textview"
                     style="@style/DataDetails"
                     android:layout_toRightOf="@id/details_location_ic"
-                    android:text="@string/stadiumLocation"/>
+                    android:text="@string/stadiumLocation" />
 
             </RelativeLayout>
 
-            <TextView
-                style="@style/Divider" />
+            <TextView style="@style/Divider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -64,14 +66,14 @@
                     android:id="@+id/details_phone_ic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tint="@color/grey_700"
-                    android:src="@drawable/ic_call_black_24dp"/>
+                    android:src="@drawable/ic_call_black_24dp"
+                    android:tint="@color/grey_700" />
 
                 <TextView
                     android:id="@+id/details_phone_textview"
                     style="@style/DataDetails"
                     android:layout_toRightOf="@id/details_phone_ic"
-                    android:text="@string/stadiumPhone"/>
+                    android:text="@string/stadiumPhone" />
 
             </RelativeLayout>
 

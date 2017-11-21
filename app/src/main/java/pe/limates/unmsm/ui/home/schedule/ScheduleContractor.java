@@ -1,9 +1,9 @@
 package pe.limates.unmsm.ui.home.schedule;
 
-
 import java.util.ArrayList;
 
 import pe.limates.unmsm.model.Course;
+import pe.limates.unmsm.model.Schedule;
 
 public class ScheduleContractor {
     interface View {

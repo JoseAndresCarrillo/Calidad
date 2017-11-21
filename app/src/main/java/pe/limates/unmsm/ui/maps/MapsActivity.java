@@ -1,6 +1,7 @@
 package pe.limates.unmsm.ui.maps;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -40,7 +42,7 @@ public class MapsActivity extends AppCompatActivity implements MapsContractor.Vi
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
     private Marker unmsmStadium;
     private ArrayList<Place> places;
-    private Place mPlace;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,11 @@ public class MapsActivity extends AppCompatActivity implements MapsContractor.Vi
         if (presenter == null) {
             presenter = new MapsPresenter(mContext);
         }
+
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage( getText(R.string.default_loading_text));
+        mProgressDialog.setCancelable(false);
+
         getLocationPermission();
         checkLocationService();
         try {
@@ -75,9 +82,19 @@ public class MapsActivity extends AppCompatActivity implements MapsContractor.Vi
     @Override
     protected void onPause() {
         super.onPause();
+        hideLoadingdialog();
         getPresenter().onViewDettached();
     }
 
+    @Override
+    public void showLoadingDialog() {
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void hideLoadingdialog() {
+        mProgressDialog.dismiss();
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -178,12 +195,13 @@ public class MapsActivity extends AppCompatActivity implements MapsContractor.Vi
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        mPlace = getPresenter().getPlaceInfo((String) marker.getTag());
+        getPresenter().getPlaceInfo((String) marker.getTag());
         return false;
     }
 
     @Override
-    public void goPlaceDetailsActivity() {
+    public void goPlaceDetailsActivity(Place mPlace) {
+        Log.d(TAG, "goPlaceDetailsActivity");
         Intent intent = new Intent(this, DetailsMarkerActivity.class);
         intent.putExtra("place", mPlace);
         startActivity(intent);

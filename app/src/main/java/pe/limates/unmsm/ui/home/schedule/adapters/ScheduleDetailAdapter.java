@@ -5,14 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Schedule;
-
 
 public class ScheduleDetailAdapter extends RecyclerView.Adapter<ScheduleDetailAdapter.CustomViewHolder> {
 
@@ -38,7 +36,7 @@ public class ScheduleDetailAdapter extends RecyclerView.Adapter<ScheduleDetailAd
             final Schedule schedule = arrayList.get(position);
             holder.day.setText(schedule.getDay());
             holder.time.setText(schedule.getStartHour().getH() + ":"
-                    + schedule.getStartHour().getM() + "-"
+                    + schedule.getStartHour().getM() + " - "
                     + schedule.getEndHour().getH() + ":"
                     + schedule.getEndHour().getM());
         } catch (Exception e) {

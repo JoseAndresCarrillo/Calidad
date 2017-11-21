@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import pe.limates.unmsm.R;
 import pe.limates.unmsm.model.Event;
 import pe.limates.unmsm.ui.home.events.adapters.EventsAdapter;
 
-public class EventsFragment extends Fragment implements EventsContractor.View{
+public class EventsFragment extends Fragment implements EventsContractor.View {
 
     private EventsContractor.Presenter presenter;
     private Context mContext;
@@ -35,6 +36,10 @@ public class EventsFragment extends Fragment implements EventsContractor.View{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
+
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nav_events);
+
         View rootView = inflater.inflate(R.layout.fragment_events, container, false);
         mContext = getActivity();
         //initilize presenter
@@ -59,7 +64,7 @@ public class EventsFragment extends Fragment implements EventsContractor.View{
             }
         });
 
-        return  rootView;
+        return rootView;
     }
 
     private void initializeViews(View view) {
@@ -91,7 +96,7 @@ public class EventsFragment extends Fragment implements EventsContractor.View{
     public void onResume() {
         super.onResume();
         getPresenter().onViewAttached(EventsFragment.this);
-        if(mArrayList.size() > 0) showRecycler();
+        if (mArrayList.size() > 0) showRecycler();
     }
 
     @Override
@@ -102,7 +107,7 @@ public class EventsFragment extends Fragment implements EventsContractor.View{
     }
 
 
-    private EventsContractor.Presenter getPresenter(){
+    private EventsContractor.Presenter getPresenter() {
         return presenter;
     }
 }

@@ -15,6 +15,14 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -55,8 +63,38 @@ public class HomeActivity extends AppCompatActivity implements IHomeActivity {
         if (homePresenter == null) {
             homePresenter = new HomePresenter(mContext);
         }
-//        initializateViews();
+
         setUpToolbar();
+
+        FirebaseMessaging.getInstance().subscribeToTopic("test");
+        FirebaseInstanceId.getInstance().getToken();
+
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.i("tokenMain", "" + token);
+        RegisterToken(token);
+
+    }
+
+    private void RegisterToken(String refreshedToken) {
+        Log.i("token", "" + refreshedToken);
+        String URL = "http://marcadorperu.com/public_proycris/api/v1/user/token?user_token=" + refreshedToken;
+        Log.i("url", URL);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.i("Response error", "error");
+
+            }
+        });
+
+        queue.add(stringRequest);
 
     }
 
@@ -85,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeActivity {
         PrimaryDrawerItem maps = new PrimaryDrawerItem().withIdentifier(R.string.nav_maps).withName(R.string.nav_maps).withSelectable(false).withIcon(R.drawable.ic_place_black_24dp);
         PrimaryDrawerItem reminders = new PrimaryDrawerItem().withIdentifier(R.string.nav_reminders).withName(R.string.nav_reminders).withSelectable(false).withIcon(R.drawable.ic_note_black_24dp);
         PrimaryDrawerItem schedule = new PrimaryDrawerItem().withIdentifier(R.string.nav_schedule).withName(R.string.nav_schedule).withSelectable(false).withIcon(R.drawable.ic_date_range_black_24dp);
-        PrimaryDrawerItem notes = new PrimaryDrawerItem().withIdentifier(R.string.nav_notes).withName(R.string.nav_notes).withSelectable(false).withIcon(R.drawable.ic_done_all_black_24dp);
+        PrimaryDrawerItem notes = new PrimaryDrawerItem().withIdentifier(R.string.nav_grades).withName(R.string.nav_grades).withSelectable(false).withIcon(R.drawable.ic_done_all_black_24dp);
         PrimaryDrawerItem about = new PrimaryDrawerItem().withIdentifier(R.string.nav_about).withName(R.string.nav_about).withSelectable(false).withIcon(R.drawable.ic_info_black_24dp);
         PrimaryDrawerItem logout = new PrimaryDrawerItem().withIdentifier(R.string.nav_logout).withName(R.string.nav_logout).withSelectable(false).withIcon(R.drawable.ic_power_settings_new_black_24dp);
 
@@ -131,7 +169,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeActivity {
                             case R.string.nav_maps:
                                 startActivity(new Intent(mContext, MapsActivity.class));
                                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
-                                break;
+                                return true;
                             case R.string.nav_logout:
                                 builder = new MaterialDialog.Builder(mContext)
                                         .title(R.string.dialog_logout_text)
@@ -174,7 +212,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeActivity {
                 case R.string.nav_schedule:
                     fragment = new ScheduleFragment();
                     break;
-                case R.string.nav_notes:
+                case R.string.nav_grades:
                     fragment = new GradesFragment();
                     break;
                 case R.string.nav_about:
@@ -243,6 +281,7 @@ public class HomeActivity extends AppCompatActivity implements IHomeActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (drawerResult != null) drawerResult.closeDrawer();
         getPresenter().onViewAttached(HomeActivity.this);
     }
 }

@@ -46,31 +46,34 @@ public class EventsPresenter implements EventsContractor.Presenter {
 
     @Override
     public ArrayList<Event> getEvents() {
-        if(isAttached()) getView().hideRecycler();
+        if (isAttached()) getView().hideRecycler();
         events.clear();
-        if(connection.getRetrofit() != null){
+        if (connection.getRetrofit() != null) {
             UnmsmAPI service = connection.getRetrofit().create(UnmsmAPI.class);
 //            Log.d(TAG, App.user_info.getToken());
-            Call<ArrayList<Event>> call = service.getEvents("Bearer "+App.user_info.getToken());
+            Call<ArrayList<Event>> call = service.getEvents("Bearer " + App.user_info.getToken());
             call.enqueue(new Callback<ArrayList<Event>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Event>> call, Response<ArrayList<Event>> response) {
-                    switch (response.code()){
-                        case 200: events.addAll(response.body());
+                    switch (response.code()) {
+                        case 200:
+                            events.addAll(response.body());
                             Log.d(TAG, "Events: yey");
-                            if(isAttached()) {
+                            if (isAttached()) {
                                 getView().updateAdapter();
                                 getView().showRecycler();
                                 getView().stopRefresh();
                             }
                             break;
-                        default: Log.d(TAG, response.raw().toString()); break;
+                        default:
+                            Log.d(TAG, response.raw().toString());
+                            break;
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<Event>> call, Throwable t) {
-                    Log.d(TAG, "Events on failture");
+                    Log.d(TAG, "Events on failure");
                 }
             });
         }

@@ -1,8 +1,6 @@
 package pe.limates.unmsm.ui.home.reminders.adapters;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,10 +15,7 @@ import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import pe.limates.unmsm.R;
-import pe.limates.unmsm.model.Event;
 import pe.limates.unmsm.model.Reminder;
-import pe.limates.unmsm.ui.home.HomeActivity;
-import pe.limates.unmsm.ui.home.events.fragments.EventsDetailFragment;
 import pe.limates.unmsm.util.app.App;
 import pe.limates.unmsm.util.retrofit.RetrofitBuilder;
 import pe.limates.unmsm.util.retrofit.UnmsmAPI;
@@ -52,47 +47,53 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Cust
 
     @Override
     public RemindersAdapter.CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         view = LayoutInflater.from(mContext).inflate(R.layout.item_reminder, parent, false);
         return new CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RemindersAdapter.CustomViewHolder holder, final int position) {
+    public void onBindViewHolder(final RemindersAdapter.CustomViewHolder holder, final int position) {
         try {
             final Reminder reminder = arrayList.get(position);
             holder.mContent.setText(reminder.getDescription());
-            holder.mCardView.setBackgroundResource(colors.get((int) (Math.random()*colors.size())));
+            holder.mCardView.setBackgroundResource(colors.get((int) (Math.random() * colors.size())));
+            holder.mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, holder.mContent.getText().toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
             holder.mDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(connection.getRetrofit() != null){
+                    if (connection.getRetrofit() != null) {
                         UnmsmAPI service = connection.getRetrofit().create(UnmsmAPI.class);
-                        Call<ResponseBody> call = service.deleteReminder("Bearer "+ App.user_info.getToken(), reminder.get_id());
+                        Call<ResponseBody> call = service.deleteReminder("Bearer " + App.user_info.getToken(), reminder.get_id());
                         call.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                switch (response.code()){
+                                switch (response.code()) {
                                     case 200:
                                         Log.d(TAG, "RemindersAdapter: yey");
                                         Toast.makeText(mContext, "Reminder borrado", Toast.LENGTH_SHORT).show();
                                         arrayList.remove(position);
                                         notifyDataSetChanged();
                                         break;
-                                    default: Log.d(TAG, response.raw().toString()); break;
+                                    default:
+                                        Log.d(TAG, response.raw().toString());
+                                        break;
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                Log.d(TAG, "RemindersAdapter on failture");
+                                Log.d(TAG, "RemindersAdapter on failure");
                             }
                         });
                     }
                 }
             });
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -102,9 +103,9 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Cust
         return arrayList.size();
     }
 
-    public void setFilter(ArrayList<Reminder> newEventArrayList) {
+    public void setFilter(ArrayList<Reminder> newReminderArrayList) {
         arrayList = new ArrayList<>();
-        arrayList.addAll(newEventArrayList);
+        arrayList.addAll(newReminderArrayList);
         notifyDataSetChanged();
     }
 
@@ -124,5 +125,6 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.Cust
             mCardView = itemView.findViewById(R.id.reminderCard);
             mDelete = itemView.findViewById(R.id.reminder_delete);
         }
+
     }
 }
